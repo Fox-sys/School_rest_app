@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'profile_service',
     'report_service',
     'comm_service',
+    'news_service',
     'url_router_service'
 ]
 
