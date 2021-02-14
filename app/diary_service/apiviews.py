@@ -20,7 +20,7 @@ class GroupUpdateDetailView(generics.RetrieveUpdateAPIView):
     queryset = Group.objects.all()
 
 
-class HomeworkListView(generics.ListAPIView):
+class HomeworkListCreateView(generics.ListCreateAPIView):
     serializer_class = HomeworkSerializer
     
     def get_queryset(self):

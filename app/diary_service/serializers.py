@@ -23,18 +23,11 @@ class HomeworkSerializer(serializers.ModelSerializer):
         read_only_fields = ['teacher', 'start_date', 'subject', 'pins']
 
 
-class HomeworkUpdateSerializer(HomeworkSerializer):
+class HomeworkUpdateSerializer(serializers.ModelSerializer):
     scores = ['1', '2', '3', '4']
-    score = serializers.CharField()
-    
-    def create(self, validated_data):
-        if not validated_data.get('score', None) in self.scores:
-            raise serializers.ValidationError("Передан несуществующий балл")
-        return super().create(validated_data)
 
-
-    def update(self, inctance, validated_data):
-        score = validated_data.get('score', None)
-        if not score in self.scores and score:
-            raise serializers.ValidationError("Передан несуществующий балл")
-        return super().update(inctance, validated_data)
+    class Meta:
+        model = Homework
+        fields = ['id', 'short_desc', 'full_desc', 'teacher', 'start_date', \
+                  'end_date', 'pins', 'score', 'subject']
+        read_only_fields = ['teacher', 'start_date', 'subject', 'pins']

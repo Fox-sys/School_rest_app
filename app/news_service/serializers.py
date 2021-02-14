@@ -7,18 +7,26 @@ class NewsSerializer(serializers.ModelSerializer):
         model = News
         fields = ['id', 'news_type', 'title', 'info', 'subject_from', 'subject_to']
 
-class NewsUpdateCreateSerializer(NewsSerializer):
+class NewsUpdateCreateSerializer(serializers.ModelSerializer):
     types = ('rp', 'nw', 'an')
-    news_type = serializers.CharField()
+
+    class Meta:
+        model = News
+        fields = ['id', 'news_type', 'title', 'info', 'subject_from', 'subject_to']
 
     def create(self, validated_data):
-        if not validated_data.get('news_type', None) in self.types:
-            raise serializers.ValidationError("Передан несуществующий тип новостей")
+        self.validate_subject_fields(validated_data)
         return super().create(validated_data)
 
-
     def update(self, inctance, validated_data):
-        news_type = validated_data.get('news_type', None)
-        if not news_type in self.types and news_type:
-            raise serializers.ValidationError("Передан несуществующий тип новостей")
+        self.validate_subject_fields(validated_data)
         return super().update(inctance, validated_data)
+    
+    def validate_subject_fields(self, validated_data):
+        news_type = validated_data.get('news_type', None)
+        subject_from = validated_data.get('subject_from', None)
+        subject_to = validated_data.get('subject_to', None)
+        if not news_type == 'rp' and (subject_from or subject_to) and (news_type or subject_to or subject_from):
+            raise serializers.ValidationError('Нельзя передавать предметы, если тип новости не является заменой')
+        if news_type == 'rp' and not (subject_from and subject_to) and (news_type or subject_to or subject_from):
+            raise serializers.ValidationError('Не были переданны обязательные предметы замены')
