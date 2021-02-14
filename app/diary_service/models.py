@@ -39,7 +39,7 @@ class Homework(models.Model):
     teacher = models.ForeignKey('profile_service.Teacher', null=True, blank=True, on_delete=models.SET_NULL)
     start_date = models.DateField('Дата начала', auto_now=True)
     end_date = models.DateField("Дата сдачи")
-    pins = models.FileField("Прикреплённый документ", upload_to="homework/")
+    pins = models.FileField("Прикреплённый документ", upload_to="homework/", blank=True, null=True)
     score = models.CharField(choices=SCORES, max_length=1)
     subject = models.ForeignKey('Subject', on_delete=models.CASCADE)
 

@@ -1,6 +1,7 @@
 from rest_framework import generics
 from .models import Subject, Group, Homework
-from .serializers import SubjectSerializer, GroupSerializer, HomeworkSerializer
+from .serializers import SubjectSerializer, GroupSerializer, HomeworkSerializer, \
+                         HomeworkUpdateSerializer
 
 class GroupListView(generics.ListAPIView):
     serializer_class = GroupSerializer
@@ -31,8 +32,13 @@ class HomeworkListView(generics.ListAPIView):
         return homework
 
 
-class HomeworkUpdateDetailView(generics.RetrieveUpdateAPIView):
+class HomeworkDetailView(generics.RetrieveAPIView):
     serializer_class = HomeworkSerializer
+    queryset = Homework.objects.all()
+
+
+class HomeworkUpdateView(generics.UpdateAPIView):
+    serializer_class = HomeworkUpdateSerializer
     queryset = Homework.objects.all()
 
 
@@ -46,6 +52,7 @@ class SubjectListView(generics.ListAPIView):
         if teacher:
             subjects = subjects.filter(teacher__in=teacher)
         return subjects
+
 
 class SubjectDetailView(generics.RetrieveAPIView):
     serializer_class = SubjectSerializer
