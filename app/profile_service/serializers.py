@@ -12,7 +12,7 @@ class MainUserSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['id', 'user', 'group', 'subjects', 'stats']
+        fields = ['id', 'user', 'group', 'stats']
         
 
 class TeacherSerializer(serializers.ModelSerializer):

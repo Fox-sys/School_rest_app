@@ -35,7 +35,6 @@ class Teacher(models.Model):
 class Student(models.Model):
     user = models.ForeignKey('MainUser', on_delete=models.CASCADE)
     group = models.ForeignKey('diary_service.Group', blank=True, null=True, on_delete=models.SET_NULL)
-    subjects = models.ManyToManyField('diary_service.Subject')
     stats = models.ManyToManyField('report_service.StatElement', blank=True, related_name='+')
 
     def __str__(self):

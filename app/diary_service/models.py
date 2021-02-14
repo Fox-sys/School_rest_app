@@ -16,6 +16,7 @@ class Group(models.Model):
     name = models.CharField('Название', max_length=150)
     students = models.ManyToManyField('profile_service.Student', blank=True, related_name='+')
     curator = models.ForeignKey('profile_service.Teacher', null=True, blank=True, on_delete=models.SET_NULL)
+    subjects = models.ManyToManyField('diary_service.Subject')
     homework = models.ManyToManyField("Homework", blank=True)
 
     def __str__(self):
