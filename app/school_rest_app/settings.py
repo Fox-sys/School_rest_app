@@ -87,8 +87,8 @@ WSGI_APPLICATION = 'school_rest_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': environ.get("SQL_EMGINE", default='django.db.backends.sqlite3'),
-        'NAME': environ.get("SQL_NAME", default='db'),
+        'ENGINE': environ.get("SQL_ENGINE", default='django.db.backends.sqlite3'),
+        'NAME': environ.get("SQL_DATABASE", default='db'),
         'USER': environ.get("SQL_USER", default=None),
         'PASSWORD': environ.get("SQL_PASSWORD", default=None),
         'HOST': environ.get("SQL_HOST", default=None),
