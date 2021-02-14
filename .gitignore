@@ -5,3 +5,4 @@ db
 .env.prod.db
 app/meida/Message_files
 app/meida/teacher_photos
+app/meida/homework
