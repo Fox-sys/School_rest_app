@@ -11,13 +11,11 @@ class ChatSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ['id', 'author', 'replays_to', 'text', 'pins', 'date', 'is_edited']
+        fields = ['id', 'author', 'replies_to', 'text', 'pins', 'date', 'is_edited']
         read_only_fields = ['author', 'date', 'is_edited']        
 
     def update(self, instance, validated_data):
-        instance.replays_to = validated_data.get('replays_to', instance.replays_to)
-        instance.text = validated_data.get('text', instance.text)
-        instance.pins = validated_data.get('pins', instance.pins)
+        instance = super().update(instance, validated_data)
         instance.is_edited = True
         instance.save()
         return instance

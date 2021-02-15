@@ -20,7 +20,6 @@ class HomeworkSerializer(serializers.ModelSerializer):
         model = Homework
         fields = ['id', 'short_desc', 'full_desc', 'teacher', 'start_date', \
                   'end_date', 'pins', 'score', 'subject']
-        read_only_fields = ['teacher', 'start_date', 'subject', 'pins']
 
 
 class HomeworkUpdateSerializer(serializers.ModelSerializer):
@@ -30,4 +29,3 @@ class HomeworkUpdateSerializer(serializers.ModelSerializer):
         model = Homework
         fields = ['id', 'short_desc', 'full_desc', 'teacher', 'start_date', \
                   'end_date', 'pins', 'score', 'subject']
-        read_only_fields = ['teacher', 'start_date', 'subject', 'pins']

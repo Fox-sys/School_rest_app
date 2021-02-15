@@ -17,10 +17,10 @@ class Chat(models.Model):
 
 class Message(models.Model):
     author = models.ForeignKey('profile_service.MainUser', on_delete=models.CASCADE)
-    replays_to = models.ForeignKey('Message', on_delete=models.CASCADE, blank=True, null=True)
+    replies_to = models.ForeignKey('Message', on_delete=models.CASCADE, blank=True, null=True)
     text = models.CharField('Текст', max_length=2000)
     pins = models.FileField('файл', upload_to='Message_files/', blank=True, null=True)
-    date = models.DateTimeField('Дата и время')
+    date = models.DateTimeField('Дата и время', auto_now=True)
     is_edited = models.BooleanField('Редактировалось?', default=False)
 
     class Meta:

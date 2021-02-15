@@ -1,20 +1,25 @@
 from .models import Chat, Message
 from .serializers import ChatSerializer, MessageSerializer
 from rest_framework import generics
+from django.shortcuts import get_object_or_404
+from rest_framework.serializers import ValidationError
 
 class ChatListView(generics.ListAPIView):
     serializer_class = ChatSerializer
 
     def get_queryset(self):
-        chats = Chat.objects.all()
         params = self.request.query_params
-        contain = params.get('contain', None)
-        user = params.get('user', None)
-        if contain:
-            chats = chats.filter(name__icontains=contain.replace('_', ' '))
-        if user:
-            chats = chats.filter(members__in=user)
-        return chats
+        if len(params) <= 1:
+            chats = Chat.objects.all()
+            name = params.get('name', None)
+            user = params.get('user', None)
+            if name:
+                chats = chats.filter(name__icontains=name.replace('_', ' '))
+            elif user:
+                chats = chats.filter(members__in=user)
+            return chats
+        raise ValidationError('Передано слишком много аргументов в url')
+        
         
 class ChatDetailUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = ChatSerializer
@@ -25,16 +30,18 @@ class MessageListCreateView(generics.ListCreateAPIView):
     serializer_class = MessageSerializer
 
     def get_queryset(self):
-        messages = Message.objects.all()
         params = self.request.query_params
-        chat = params.get('chat', None)
-        replay = params.get('replay', None)
-        if chat:
-            chat = Chat.objects.get(id=chat)
-            messages = chat.messages.all()
-        if replay:
-            messages = messages.filter(replays_to=replay)
-        return messages
+        if len(params) <= 1:
+            messages = Message.objects.all()
+            chat = params.get('chat', None)
+            replies_to = params.get('replies_to', None)
+            if chat:
+                chat = get_object_or_404(Chat, pk=chat)
+                messages = chat.messages.all()
+            elif replies_to:
+                messages = messages.filter(replies_to=replies_to)
+            return messages
+        raise ValidationError('Передано слишком много аргументов в url')
 
 
 class MesssageDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
