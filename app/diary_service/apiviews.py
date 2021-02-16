@@ -23,7 +23,7 @@ class GroupUpdateDetailView(generics.RetrieveUpdateAPIView):
     queryset = Group.objects.all()
 
 
-class HomeworkListCreateView(generics.ListCreateAPIView):
+class HomeworkListView(generics.ListAPIView):
     serializer_class = HomeworkSerializer
     
     def get_queryset(self):
@@ -46,8 +46,11 @@ class HomeworkListCreateView(generics.ListCreateAPIView):
             return homework
         raise ValidationError('Передано слишком много аргументов в url')
 
+class HomeworkCreateView(generics.CreateAPIView):
+    serializer_class = HomeworkUpdateSerializer
+    queryset = Homework.objects.all()
 
-class HomeworkDetailView(generics.RetrieveAPIView):
+class HomeworkDetailDestroyView(generics.RetrieveDestroyAPIView):
     serializer_class = HomeworkSerializer
     queryset = Homework.objects.all()
 

@@ -3,7 +3,7 @@ from django.db import models
 class News(models.Model):
     TYPES = (
         ('rp', 'Замена'),
-        ('nw', 'Новость'),
+        ('nw', 'Новое'),
         ('an', 'Объявление'),
     )
     news_type = models.CharField("Тип", choices=TYPES, max_length=2)

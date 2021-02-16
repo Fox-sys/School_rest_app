@@ -19,8 +19,7 @@ On linux:
 6) sudo docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
 
 # Patch note
-Version: 1.0.0
+Version: 1.0.1
 
-1) Filters for list view added
-2) docs for comm and diary service
-3) api is ready for creating frontend
+1) Added docs for News service
+2) Added missing and forgotten views for diary service
