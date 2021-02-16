@@ -13,6 +13,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['id', 'user', 'group', 'stats']
+        read_only_fields = ['user', 'group']
         
 
 class TeacherSerializer(serializers.ModelSerializer):

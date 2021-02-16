@@ -95,8 +95,8 @@ replies_to (id of message)
 ## MesssageDetailUpdateDeleteView:
 View for getting updating and deleting current message
 
-# Entry Points
-'chats' - ChatListView
-'chats/{pk}' - ChatDetailUpdateView
-'messages' - MessageListCreateView
-'messages/{pk}' - MesssageDetailUpdateDeleteView
+# Entry Points:
+- 'chats' - ChatListView
+- 'chats/{pk}' - ChatDetailUpdateView
+- 'messages' - MessageListCreateView
+- 'messages/{pk}' - MesssageDetailUpdateDeleteView

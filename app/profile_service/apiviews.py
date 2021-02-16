@@ -21,7 +21,7 @@ class StudentListView(generics.ListAPIView):
         raise ValidationError('Передано слишком много аргументов в url')
     
 
-class StudentDetailView(generics.RetrieveAPIView):
+class StudentDetailUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = StudentSerializer
     queryset = Student.objects.all()
 
@@ -41,9 +41,9 @@ class TeacherListView(generics.ListAPIView):
             is_group_curator = params.get('is_group_curator', None)
             is_chat_curator = params.get('is_chat_curator', None)
             if group:
-                return teachers.filter(is_group_curator=is_group_curator)
+                return teachers.filter(is_group_curator=bool(is_group_curator))
             if is_chat_curator:
-                return teachers.filter(is_chat_curator=is_chat_curator)
+                return teachers.filter(is_chat_curator=bool(is_chat_curator))
             return teachers
         raise ValidationError('Передано слишком много аргументов в url')
 

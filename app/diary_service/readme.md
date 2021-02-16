@@ -152,12 +152,12 @@ group (id of group)
 ## SubjectDetailView:
 View for getting current subject
 
-# Entry Points
-'groups' - GroupListView
-'groups/{pk}' - GroupUpdateDetailView
-'homework' - HomeworkListView
-'homework/create' - HomeworkCreateView
-'homework/{pk}' - HomeworkDetailDestroyView
-'homework/{pk}/update' - HomeworkUpdateView
-'subjects' - SubjectListView
-'subjects/{pk}' - SubjectDetailView
+# Entry Points:
+- 'groups' - GroupListView
+- 'groups/{pk}' - GroupUpdateDetailView
+- 'homework' - HomeworkListView
+- 'homework/create' - HomeworkCreateView
+- 'homework/{pk}' - HomeworkDetailDestroyView
+- 'homework/{pk}/update' - HomeworkUpdateView
+- 'subjects' - SubjectListView
+- 'subjects/{pk}' - SubjectDetailView

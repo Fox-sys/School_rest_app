@@ -1,5 +1,5 @@
 # News Service
-This service made for realizing diary system
+This service made for realizing news system
 
 # Models:
 
@@ -60,7 +60,7 @@ View for getting list of news
 ### Filters: 
 news_type (short choice form)
 subject_from (id of subject)
-subject_to (id of subject))
+subject_to (id of subject)
 
 ## NewsCreateView:
 View for creating news
@@ -72,7 +72,7 @@ View for for updating current news
 View for getting and deleting current news
 
 # Entry Points:
-'' - NewsListView
-'{pk}' - NewsDetailDeleteView
-'{pk}/update' - NewsUpdateView
-'create' - NewsCreateView
+- ' ' - NewsListView
+- '{pk}' - NewsDetailDeleteView
+- '{pk}/update' - NewsUpdateView
+- 'create' - NewsCreateView
