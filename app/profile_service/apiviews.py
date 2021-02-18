@@ -1,9 +1,11 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
 from .models import MainUser, Teacher, Student
 from diary_service.models import Group
 from .serializers import MainUserSerializer, StudentSerializer, TeacherSerializer
 from rest_framework.serializers import ValidationError
 from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
 
 class StudentListView(generics.ListAPIView):
     serializer_class = StudentSerializer
@@ -51,3 +53,9 @@ class TeacherListView(generics.ListAPIView):
 class TeacherDetailView(generics.RetrieveAPIView):
     serializer_class = TeacherSerializer
     queryset = Teacher.objects.all()
+
+
+class Logout(APIView):
+    def get(self, request, format=None):
+        request.user.authtoken.delete()
+        return Response(status=status.HTTP_200_OK)

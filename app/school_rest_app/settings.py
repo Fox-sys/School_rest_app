@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'report_service',
     'comm_service',
     'news_service',
-    'url_router_service'
+    'url_router_service',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -147,6 +148,16 @@ REST_FRAMEWORK = {
     ]
 }
 
-CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:80",
+]
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 AUTH_USER_MODEL = 'profile_service.MainUser'

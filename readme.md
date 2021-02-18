@@ -19,7 +19,8 @@ On linux:
 6) sudo docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
 
 # Patch note
-Version: 1.0.2
+Version: 1.1.0
 
-1) Docs for every service 
-2) Some fixes in every service
+1) Added auth system
+2) Changed some serializers and added new (see in comm_service.readme)
+3) Added Permitions for comm service (see in comm_service.readme)

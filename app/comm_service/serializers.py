@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Chat, Message
+from django.shortcuts import get_object_or_404
 
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,7 +9,7 @@ class ChatSerializer(serializers.ModelSerializer):
         read_only_fields = ['name', 'members', 'curator', 'is_curated']   
         
 
-class MessageSerializer(serializers.ModelSerializer):
+class MessageUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ['id', 'author', 'replies_to', 'text', 'pins', 'date', 'is_edited']
@@ -19,3 +20,22 @@ class MessageSerializer(serializers.ModelSerializer):
         instance.is_edited = True
         instance.save()
         return instance
+
+class MessageCreateSerializer(serializers.ModelSerializer):
+    chat = serializers.CharField()
+
+    class Meta:
+        model = Message
+        fields = ['id', 'author', 'replies_to', 'text', 'pins', 'chat']
+    
+    def create(self, validated_data):
+        chat = get_object_or_404(Chat, id=validated_data.get('chat'))
+        message = super().create(validated_data)
+        chat.messages.add(message)
+        return message
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ['id', 'author', 'date']

@@ -1,8 +1,10 @@
 from .models import Chat, Message
-from .serializers import ChatSerializer, MessageSerializer
-from rest_framework import generics
+from .serializers import ChatSerializer, MessageSerializer, MessageUpdateSerializer, \
+                         MessageCreateSerializer
+from rest_framework import generics, permissions
 from django.shortcuts import get_object_or_404
 from rest_framework.serializers import ValidationError
+from .permitions import CanUseMessage, UserIsInChat
 
 class ChatListView(generics.ListAPIView):
     serializer_class = ChatSerializer
@@ -21,13 +23,15 @@ class ChatListView(generics.ListAPIView):
         raise ValidationError('Передано слишком много аргументов в url')
         
         
-class ChatDetailUpdateView(generics.RetrieveUpdateAPIView):
+class ChatDetailView(generics.RetrieveAPIView):
     serializer_class = ChatSerializer
     queryset = Chat.objects.all()
+    permission_classes = [UserIsInChat]
 
 
-class MessageListCreateView(generics.ListCreateAPIView):
+class MessageListView(generics.ListAPIView):
     serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         params = self.request.query_params
@@ -44,6 +48,13 @@ class MessageListCreateView(generics.ListCreateAPIView):
         raise ValidationError('Передано слишком много аргументов в url')
 
 
-class MesssageDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = MessageSerializer
+class MessageCreateView(generics.CreateAPIView):
+    serializer_class = MessageCreateSerializer
     queryset = Message.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class MesssageDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = MessageUpdateSerializer
+    queryset = Message.objects.all()
+    permission_classes = [CanUseMessage]

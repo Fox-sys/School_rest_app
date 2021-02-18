@@ -44,7 +44,9 @@ no str method
 # Serializers:
 
 - ChatSerializer
+- MessageUpdateSerializer
 - MessageSerializer
+- MessageCreateSerializer
 
 ## ChatSerializer:
 
@@ -57,7 +59,7 @@ id, name, members, curator, is_curated, messages
 ### Read Only Fields:
 name, members, curator, is_curated
 
-## MessageSerializer:
+## MessageUpdateSerializer:
 
 ### Model: 
 comm_service.Message
@@ -68,12 +70,30 @@ id, author, replies_to, text, pins, date, is_edited
 ### Read Only Fields:
 author, date, is_edited
 
+## MessageSerializer:
+
+### Model: 
+comm_service.Message
+
+### Fields:
+id, author, date
+
+## MessageCreateSerializer:
+
+### Model: 
+comm_service.Message
+
+### Fields:
+id, author, replies_to, text, pins, date, chat
+
+
 # Views:
 
 - ChatListView
-- ChatDetailUpdateView
-- MessageListCreateView
+- ChatDetailView
+- MessageListView
 - MesssageDetailUpdateDeleteView
+- MessageCreateView
 
 ## ChatListView:
 View for getting list of chats
@@ -82,21 +102,29 @@ View for getting list of chats
 name (string)
 user (id of user)
 
-## ChatDetailUpdateView:
-View for getting and updating current chat
+## ChatDetailView:
+View for getting current chat
 
-## MessageListCreateView:
-View for getting list of messages and creating message
+## MessageListView:
+View for getting list of messages
 
 ### Filters: 
 chat (id of chat)
 replies_to (id of message)
+
+## MessageListView:
+View for creating messages
 
 ## MesssageDetailUpdateDeleteView:
 View for getting updating and deleting current message
 
 # Entry Points:
 - 'chats' - ChatListView
-- 'chats/{pk}' - ChatDetailUpdateView
-- 'messages' - MessageListCreateView
+- 'chats/{pk}' - ChatDetailView
+- 'messages' - MessageListView
 - 'messages/{pk}' - MesssageDetailUpdateDeleteView
+- 'messages/create' - MessageCreateView
+
+# Permitions:
+- CanUseMessage (you can read, change, delete message)
+- UserIsInChat (Checks if you are in chat)
