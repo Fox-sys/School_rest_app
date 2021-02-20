@@ -21,6 +21,4 @@ On linux:
 # Patch note
 Version: 1.1.1
 
-1) Added auth system
-2) Changed some serializers and added new (see in comm_service.readme)
-3) Added Permitions for comm service (see in comm_service.readme)
+Auth system works correctly (only for comms service actually)
