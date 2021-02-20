@@ -19,8 +19,6 @@ On linux:
 6) sudo docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
 
 # Patch note
-Version: 1.2.0
+Version: 1.3.0
 
-1) Permissions for diary service
-2) some fixes
-3) homework views and serializers were refactored
+Permissions for news service

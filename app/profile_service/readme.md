@@ -128,3 +128,6 @@ View for getting current teacher
 - 'teachers' - TeacherListView
 - 'teachers/{pk}' - TeacherDetailView
 - 'users/{pk}' - MainUserDetailView
+
+# Permissions:
+- IsATeacher (Checks if user is a teacher)

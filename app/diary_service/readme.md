@@ -204,5 +204,4 @@ AllowAny
 - 'subjects/{pk}' - SubjectDetailView
 
 # Permissions:
-IsATeacher (Checks if user is a teacher)
-UserIsInGroup (Checks if user is in a group)
+- UserIsInGroup (Checks if user is in a group)

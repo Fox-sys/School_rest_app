@@ -52,7 +52,8 @@ id, news_type, title, info, subject_from, subject_to
 - NewsListView
 - NewsCreateView
 - NewsUpdateView
-- NewsDetailDeleteView
+- NewsDetailView
+- NewsDeleteView
 
 ## NewsListView:
 View for getting list of news
@@ -68,8 +69,11 @@ View for creating news
 ## NewsUpdateView:
 View for for updating current news
 
-## NewsDetailDeleteView:
-View for getting and deleting current news
+## NewsDetailView:
+View for getting current news
+
+## NewsDeleteView:
+View for deleting current news
 
 # Entry Points:
 - ' ' - NewsListView

@@ -1,15 +1,17 @@
 from rest_framework import generics
 from .models import Subject, Group, Homework
 from .serializers import SubjectSerializer, GroupSerializer, HomeworkSerializer, \
-                         HomeworkUpdateSerializer, HomeworkCreateSerializer
+    HomeworkUpdateSerializer, HomeworkCreateSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions
-from .permissions import IsATeacher, UserIsInGroup
+from .permissions import UserIsInGroup
+from profile_service.permissions import IsATeacher
+
 
 class GroupListView(generics.ListAPIView):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
-    
+
     def get_queryset(self):
         params = self.request.query_params
         if len(params) <= 1:
@@ -19,7 +21,7 @@ class GroupListView(generics.ListAPIView):
                 groups = groups.filter(subjects__in=subject)
             return groups
         raise ValidationError('Передано слишком много аргументов в url')
-        
+
 
 class GroupUpdateDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = GroupSerializer
@@ -30,7 +32,7 @@ class GroupUpdateDetailView(generics.RetrieveUpdateAPIView):
 class HomeworkListView(generics.ListAPIView):
     permission_classes = [UserIsInGroup, IsATeacher]
     serializer_class = HomeworkSerializer
-    
+
     def get_queryset(self):
         params = self.request.query_params
         if len(params) <= 1:
@@ -54,7 +56,7 @@ class HomeworkListView(generics.ListAPIView):
     def check_object_permissions(self, request, obj):
         for permission in self.get_permissions():
             if permission.has_object_permission(request, self, obj):
-                return None    
+                return None
         self.permission_denied(
             request,
             message=getattr(permission, 'message', None),
@@ -76,7 +78,7 @@ class HomeworkDetailView(generics.RetrieveAPIView):
     def check_object_permissions(self, request, obj):
         for permission in self.get_permissions():
             if permission.has_object_permission(request, self, obj):
-                return None    
+                return None
         self.permission_denied(
             request,
             message=getattr(permission, 'message', None),
@@ -98,7 +100,7 @@ class HomeworkUpdateView(generics.UpdateAPIView):
 
 class SubjectListView(generics.ListAPIView):
     serializer_class = SubjectSerializer
-    
+
     def get_queryset(self):
         params = self.request.query_params
         if len(params) <= 1:
@@ -112,6 +114,7 @@ class SubjectListView(generics.ListAPIView):
                 subjects = group.subject.all()
             return subjects
         raise ValidationError('Передано слишком много аргументов в url')
+
 
 class SubjectDetailView(generics.RetrieveAPIView):
     serializer_class = SubjectSerializer

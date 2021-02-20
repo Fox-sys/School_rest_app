@@ -102,21 +102,36 @@ View for getting list of chats
 name (string)
 user (id of user)
 
+### Permissions:
+AlloyAny
+
 ## ChatDetailView:
 View for getting current chat
 
+### Permissions:
+UserIsInChat
+
 ## MessageListView:
 View for getting list of messages
+
+### Permissions:
+IsAuthenticated
 
 ### Filters: 
 chat (id of chat)
 replies_to (id of message)
 
-## MessageListView:
+## MessageCreateView:
 View for creating messages
+
+### Permissions:
+IsAuthenticated
 
 ## MesssageDetailUpdateDeleteView:
 View for getting updating and deleting current message
+
+### Permissions:
+CanUseMessage
 
 # Entry Points:
 - 'chats' - ChatListView
