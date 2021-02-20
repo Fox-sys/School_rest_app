@@ -1,11 +1,14 @@
 from rest_framework import generics
 from .models import Subject, Group, Homework
 from .serializers import SubjectSerializer, GroupSerializer, HomeworkSerializer, \
-                         HomeworkUpdateSerializer
+                         HomeworkUpdateSerializer, HomeworkCreateSerializer
 from django.shortcuts import get_object_or_404
+from rest_framework import permissions
+from .permissions import IsATeacher, UserIsInGroup
 
 class GroupListView(generics.ListAPIView):
     serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
         params = self.request.query_params
@@ -21,9 +24,11 @@ class GroupListView(generics.ListAPIView):
 class GroupUpdateDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
+    permission_classes = [IsATeacher]
 
 
 class HomeworkListView(generics.ListAPIView):
+    permission_classes = [UserIsInGroup, IsATeacher]
     serializer_class = HomeworkSerializer
     
     def get_queryset(self):
@@ -46,18 +51,48 @@ class HomeworkListView(generics.ListAPIView):
             return homework
         raise ValidationError('Передано слишком много аргументов в url')
 
-class HomeworkCreateView(generics.CreateAPIView):
-    serializer_class = HomeworkUpdateSerializer
-    queryset = Homework.objects.all()
+    def check_object_permissions(self, request, obj):
+        for permission in self.get_permissions():
+            if permission.has_object_permission(request, self, obj):
+                return None    
+        self.permission_denied(
+            request,
+            message=getattr(permission, 'message', None),
+            code=getattr(permission, 'code', None)
+        )
 
-class HomeworkDetailDestroyView(generics.RetrieveDestroyAPIView):
+class HomeworkCreateView(generics.CreateAPIView):
+    serializer_class = HomeworkCreateSerializer
+    queryset = Homework.objects.all()
+    permission_classes = [IsATeacher]
+
+
+class HomeworkDetailView(generics.RetrieveAPIView):
     serializer_class = HomeworkSerializer
     queryset = Homework.objects.all()
+    permission_classes = [IsATeacher, UserIsInGroup]
+
+    def check_object_permissions(self, request, obj):
+        for permission in self.get_permissions():
+            if permission.has_object_permission(request, self, obj):
+                return None    
+        self.permission_denied(
+            request,
+            message=getattr(permission, 'message', None),
+            code=getattr(permission, 'code', None)
+        )
+
+
+class HomeworkDestroyView(generics.DestroyAPIView):
+    serializer_class = HomeworkSerializer
+    queryset = Homework.objects.all()
+    permission_classes = [IsATeacher]
 
 
 class HomeworkUpdateView(generics.UpdateAPIView):
     serializer_class = HomeworkUpdateSerializer
     queryset = Homework.objects.all()
+    permission_classes = [IsATeacher]
 
 
 class SubjectListView(generics.ListAPIView):
@@ -76,8 +111,6 @@ class SubjectListView(generics.ListAPIView):
                 subjects = group.subject.all()
             return subjects
         raise ValidationError('Передано слишком много аргументов в url')
-        
-
 
 class SubjectDetailView(generics.RetrieveAPIView):
     serializer_class = SubjectSerializer

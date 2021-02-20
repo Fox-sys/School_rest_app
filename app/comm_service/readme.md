@@ -125,6 +125,6 @@ View for getting updating and deleting current message
 - 'messages/{pk}' - MesssageDetailUpdateDeleteView
 - 'messages/create' - MessageCreateView
 
-# Permitions:
+# permissions:
 - CanUseMessage (you can read, change, delete message)
 - UserIsInChat (Checks if you are in chat)

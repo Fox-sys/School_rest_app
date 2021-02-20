@@ -65,6 +65,7 @@ returns subject name and short_desc
 - GroupSerializer
 - HomeworkSerializer
 - HomeworkUpdateSerializer
+- HomeworkCreateSerializer
 
 ## SubjectSerializer:
 
@@ -102,7 +103,15 @@ score (returns choice display)
 diary_service.Homework
 
 ### Fields:
-id, short_desc, full_desc, teacher, start_date, end_date, pins, score, subject
+id, short_desc, full_desc, end_date, pins, score
+
+## HomeworkCreateSerializer:
+
+### Model: 
+diary_service.Homework
+
+### Fields:
+id, short_desc, full_desc, end_date, pins, score, teacher, subject
 
 # Views:
 
@@ -110,10 +119,11 @@ id, short_desc, full_desc, teacher, start_date, end_date, pins, score, subject
 - GroupUpdateDetailView
 - HomeworkListView
 - HomeworkCreateView
-- HomeworkDetailDestroyView
+- HomeworkDetailView
 - HomeworkUpdateView
 - SubjectListView
 - SubjectDetailView
+- HomeworkDestroyView
 
 ## GroupListView:
 View for getting list of groups
@@ -121,11 +131,20 @@ View for getting list of groups
 ### Filters: 
 subject (id of subject)
 
+### Permissions:
+IsAuthenticated
+
 ## GroupUpdateDetailView:
 View for getting and updating current group
 
+### Permissions:
+IsATeacher
+
 ## HomeworkListView:
 View for getting list of homework
+
+### Permissions:
+IsATeacher or UserIsInGroup
 
 ### Filters: 
 start_date (date)
@@ -133,17 +152,35 @@ end_date (date)
 teacher (id of teacher)
 group (id of group)
 
-## HomeworkDetailDestroyView:
-View for getting current homework and deleting it
+## HomeworkDetailView:
+View for getting current homework
+
+### Permissions:
+IsATeacher or UserIsInGroup
 
 ## HomeworkUpdateView:
 View for updating homework
 
+### Permissions:
+IsATeacher
+
+## HomeworkDestroyView:
+View for destroing homework
+
+### Permissions:
+IsATeacher
+
 ## HomeworkCreateView:
 View for creating new homework 
 
+### Permissions:
+IsATeacher
+
 ## SubjectListView:
 View for getting list of subjects
+
+### Permissions:
+AllowAny
 
 ### Filters: 
 teacher (id of teacher)
@@ -152,6 +189,9 @@ group (id of group)
 ## SubjectDetailView:
 View for getting current subject
 
+### Permissions:
+AllowAny
+
 # Entry Points:
 - 'groups' - GroupListView
 - 'groups/{pk}' - GroupUpdateDetailView
@@ -159,5 +199,10 @@ View for getting current subject
 - 'homework/create' - HomeworkCreateView
 - 'homework/{pk}' - HomeworkDetailDestroyView
 - 'homework/{pk}/update' - HomeworkUpdateView
+- 'homework/{pk}/destroy' - HomeworkDestroyView
 - 'subjects' - SubjectListView
 - 'subjects/{pk}' - SubjectDetailView
+
+# Permissions:
+IsATeacher (Checks if user is a teacher)
+UserIsInGroup (Checks if user is in a group)

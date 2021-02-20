@@ -19,6 +19,8 @@ On linux:
 6) sudo docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
 
 # Patch note
-Version: 1.1.1
+Version: 1.2.0
 
-Auth system works correctly (only for comms service actually)
+1) Permissions for diary service
+2) some fixes
+3) homework views and serializers were refactored

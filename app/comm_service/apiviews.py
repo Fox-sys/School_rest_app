@@ -4,7 +4,7 @@ from .serializers import ChatSerializer, MessageSerializer, MessageUpdateSeriali
 from rest_framework import generics, permissions
 from django.shortcuts import get_object_or_404
 from rest_framework.serializers import ValidationError
-from .permitions import CanUseMessage, UserIsInChat
+from .permissions import CanUseMessage, UserIsInChat
 
 class ChatListView(generics.ListAPIView):
     serializer_class = ChatSerializer

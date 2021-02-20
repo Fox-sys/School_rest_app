@@ -16,16 +16,21 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class HomeworkSerializer(serializers.ModelSerializer):
     score = serializers.CharField(source='get_score_display')
+
     class Meta:
         model = Homework
         fields = ['id', 'short_desc', 'full_desc', 'teacher', 'start_date', \
+                  'end_date', 'pins', 'score', 'subject']
+
+
+class HomeworkCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Homework
+        fields = ['id', 'short_desc', 'full_desc', 'teacher', \
                   'end_date', 'pins', 'score', 'subject']
 
 
 class HomeworkUpdateSerializer(serializers.ModelSerializer):
-    scores = ['1', '2', '3', '4']
-
     class Meta:
         model = Homework
-        fields = ['id', 'short_desc', 'full_desc', 'teacher', 'start_date', \
-                  'end_date', 'pins', 'score', 'subject']
+        fields = ['id', 'short_desc', 'full_desc', 'end_date', 'pins', 'score']
