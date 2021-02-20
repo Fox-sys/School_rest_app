@@ -6,6 +6,7 @@ from .serializers import MainUserSerializer, StudentSerializer, TeacherSerialize
 from rest_framework.serializers import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
 
 class StudentListView(generics.ListAPIView):
     serializer_class = StudentSerializer
@@ -57,5 +58,5 @@ class TeacherDetailView(generics.RetrieveAPIView):
 
 class Logout(APIView):
     def get(self, request, format=None):
-        request.user.authtoken.delete()
+        get_object_or_404(Token, user=request.user).delete()
         return Response(status=status.HTTP_200_OK)

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .apiviews import StudentListView, StudentDetailUpdateView, MainUserDetailView, \
-                      TeacherListView, TeacherDetailView
+                      TeacherListView, TeacherDetailView, Logout
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('users/<int:pk>', MainUserDetailView.as_view(), name='current_user'),
     path('auth/', include('djoser.urls')),
     path('auth/token', obtain_auth_token, name='token'),
+    path('auth/logout', Logout.as_view(), name='logout'),
 ]
