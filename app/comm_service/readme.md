@@ -92,7 +92,9 @@ id, author, replies_to, text, pins, date, chat
 - ChatListView
 - ChatDetailView
 - MessageListView
-- MesssageDetailUpdateDeleteView
+- MessageDetailView
+- MesssageDeleteView
+- MesssageUpdateView
 - MessageCreateView
 
 ## ChatListView:
@@ -127,8 +129,20 @@ View for creating messages
 ### Permissions:
 IsAuthenticated
 
-## MesssageDetailUpdateDeleteView:
-View for getting updating and deleting current message
+## MesssageDetailView:
+View for getting current message
+
+### Permissions:
+UserIsInChat
+
+## MesssageUpdateView:
+View for updating current message
+
+### Permissions:
+CanUseMessage
+
+## MesssageDeleteView:
+View for deleting current message
 
 ### Permissions:
 CanUseMessage
@@ -137,7 +151,9 @@ CanUseMessage
 - 'chats' - ChatListView
 - 'chats/{pk}' - ChatDetailView
 - 'messages' - MessageListView
-- 'messages/{pk}' - MesssageDetailUpdateDeleteView
+- 'messages/{pk}' - MesssageDetailView
+- 'messages/{pk}/update' - MesssageUpdateView
+- 'messages/{pk}/delete' - MesssageDeleteView
 - 'messages/create' - MessageCreateView
 
 # permissions:

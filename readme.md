@@ -19,6 +19,8 @@ On linux:
 6) sudo docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
 
 # Patch note
-Version: 1.3.0
+Version: 1.4.0
 
-Permissions for news service
+1) Permissions classes refactoring
+2) Permissions for the profile service now work
+3) Model in comm service, diary service and profile service got special methods for checking permissions of users 

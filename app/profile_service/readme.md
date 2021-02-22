@@ -128,6 +128,9 @@ View for getting current teacher
 - 'teachers' - TeacherListView
 - 'teachers/{pk}' - TeacherDetailView
 - 'users/{pk}' - MainUserDetailView
+- 'auth/token' - getting token
+- 'auth/logout' - deleting token
 
 # Permissions:
 - IsATeacher (Checks if user is a teacher)
+- IsAccountOwner (Checks if you are account owner)

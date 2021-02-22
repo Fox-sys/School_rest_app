@@ -6,6 +6,9 @@ class Chat(models.Model):
     curator = models.ForeignKey('profile_service.Teacher', blank=True, null=True, on_delete=models.SET_NULL)
     is_curated = models.BooleanField('Чат курируется?', default=True)
     messages = models.ManyToManyField('Message', blank=True)
+
+    def check_user_permissions(self, obj):
+        return obj in self.members or obj is self.curator
     
     def __str__(self):
         return self.name
@@ -22,6 +25,9 @@ class Message(models.Model):
     pins = models.FileField('файл', upload_to='Message_files/', blank=True, null=True)
     date = models.DateTimeField('Дата и время', auto_now=True)
     is_edited = models.BooleanField('Редактировалось?', default=False)
+
+    def check_user_permissions(self, obj):
+        return obj is self.author
 
     class Meta:
         verbose_name = 'Сообщение'

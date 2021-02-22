@@ -7,7 +7,5 @@ class UserIsInGroup(BasePermission):
         if request.user.is_authenticated:
             student = Student.objects.filter(user=request.user)
             if student.exists():
-                student = student[0]
-                if obj in student.group.homework.all():
-                    return True
+                return obj.check_student_permissions(student[0])
         return False

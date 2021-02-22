@@ -54,7 +54,19 @@ class MessageCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class MesssageDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+class MesssageDeleteView(generics.DestroyAPIView):
     serializer_class = MessageUpdateSerializer
     queryset = Message.objects.all()
     permission_classes = [CanUseMessage]
+
+
+class MesssageUpdateView(generics.UpdateAPIView):
+    serializer_class = MessageUpdateSerializer
+    queryset = Message.objects.all()
+    permission_classes = [CanUseMessage]
+
+
+class MessageDetailView(generics.RetrieveAPIView):
+    serializer_class = MessageUpdateSerializer
+    queryset = Message.objects.all()
+    permission_classes = [UserIsInChat]

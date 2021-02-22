@@ -9,7 +9,6 @@ urlpatterns = [
     path('teachers/', TeacherListView.as_view(), name='teacher_list'),
     path('teachers/<int:pk>', TeacherDetailView.as_view(), name='current_teacher'),
     path('users/<int:pk>', MainUserDetailView.as_view(), name='current_user'),
-    path('auth/', include('djoser.urls')),
     path('auth/token', obtain_auth_token, name='token'),
     path('auth/logout', Logout.as_view(), name='logout'),
 ]

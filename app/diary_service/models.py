@@ -19,6 +19,9 @@ class Group(models.Model):
     subjects = models.ManyToManyField('diary_service.Subject')
     homework = models.ManyToManyField("Homework", blank=True)
 
+    def check_student_permissions(self, obj):
+        return obj in self.students
+
     def __str__(self):
         return self.name
 
@@ -42,6 +45,12 @@ class Homework(models.Model):
     pins = models.FileField("Прикреплённый документ", upload_to="homework/", blank=True, null=True)
     score = models.CharField(choices=SCORES, max_length=1)
     subject = models.ForeignKey('Subject', on_delete=models.CASCADE)
+
+    def check_student_permissions(self, obj):
+        groups = Group.objects.filter(homework=self)
+        for i in groups:
+            if obj in i.students:
+                return True
 
     def __str__(self):
         return f"{self.subject}: {self.short_desc}"

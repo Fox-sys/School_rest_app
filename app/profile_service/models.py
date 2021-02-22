@@ -9,6 +9,9 @@ class MainUser(AbstractUser):
     def __str__(self):
         return f'{self.username}: {self.last_name} {self.first_name} {self.middle_name}'
 
+    def check_user_permissions(self, obj):
+        return self == obj
+
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
@@ -27,6 +30,9 @@ class Teacher(models.Model):
     def __str__(self):
         return f'{self.user.username}: {self.user.last_name} {self.user.first_name} {self.user.middle_name}'
         
+    def check_user_permissions(self, obj):
+        return self.user == obj
+
     class Meta:
         verbose_name = 'Учитель'
         verbose_name_plural = 'Учителя'
@@ -36,6 +42,9 @@ class Student(models.Model):
     user = models.ForeignKey('MainUser', on_delete=models.CASCADE)
     group = models.ForeignKey('diary_service.Group', blank=True, null=True, on_delete=models.SET_NULL)
     stats = models.ManyToManyField('report_service.StatElement', blank=True, related_name='+')
+
+    def check_user_permissions(self, obj):
+        return self.user == obj
 
     def __str__(self):
         return f'{self.user.username}: {self.user.last_name} {self.user.first_name} {self.user.middle_name}'
